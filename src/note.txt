@@ -1,0 +1,49 @@
+Spring + Spring MVC + mybatis：
+
+1、导入所需要的jar包
+2、创建实体类
+3、创建实体类是对应的mapper、service
+4、创建mapper.xml,其中<mappers namespace="具体到mapper类"/>
+5、创建Spring配置文件，applicationContext.xml
+    ①、启用注解
+    ②、配置扫描的包
+    ③、配置数据源 DriverManagerDataSource
+    ④、配置sqlSession,以及扫描mapper下的xml文件
+    ⑤、扫描mapper类
+6、创建Spring MVC配置文件，springMVC.xml
+    ①、启用注解
+    ②、配置扫描的包
+    ③、配置注解驱动    <mvc:annotation-driven />
+    ④、静态页面访问配置  <mvc:default-servlet-handler />
+    ⑤、配置视图解析器  InternalResourceViewResolver prefix  suffix
+
+7、配置web.xml
+    ①、配置监听  ContextLoaderListener
+        <listener>
+            <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        </listener>
+    ②、配置spring的配置文件
+        <context-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:applicationContext.xml</param-value>
+        </context-param>
+    ③、配置springMVC配置文件以及spring MVC核心servlet DispatcherServlet
+        <servlet>
+            <servlet-name>mvc-dispatcher</servlet-name>
+            <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+            <!-- spring mvc的配置文件 -->
+            <init-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>classpath:springMVC.xml</param-value>
+            </init-param>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>mvc-dispatcher</servlet-name>
+            <url-pattern>/</url-pattern>
+        </servlet-mapping>
+
+8、SSM整合流程：
+    ①、请求/listCategory
+    ②、tomcat根据web.xml，拦截到/listCategory请求，并且交予DispatcherServlet处理
+    ③、DispatcherServlet根据spring MVC的配置，然后将请求交予CategoryController进行处理
