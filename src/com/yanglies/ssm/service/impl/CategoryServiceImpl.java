@@ -27,13 +27,13 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.list();
     }
 
-    @Override
-    public int total() {
-        return categoryMapper.total();
-    }
-
-    @Override
-    public List<Category> list(Page page) {
-        return categoryMapper.list(page);
-    }
+//    @Override
+//    public int total() {
+//        return categoryMapper.total();
+//    }
+//
+//    @Override
+//    public List<Category> list(Page page) {
+//        return categoryMapper.list(page);
+//    }
 }

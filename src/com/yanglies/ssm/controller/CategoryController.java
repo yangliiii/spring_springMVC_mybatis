@@ -1,5 +1,7 @@
 package com.yanglies.ssm.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yanglies.ssm.pojo.Category;
 import com.yanglies.ssm.service.CategoryService;
 import com.yanglies.ssm.util.Page;
@@ -30,9 +32,11 @@ public class CategoryController {
     @RequestMapping("listCategory")
     public ModelAndView listCategory(Page page){
         ModelAndView mv = new ModelAndView();
-        List<Category> categories = categoryService.list(page);
+        PageHelper.offsetPage(page.getStart(),5);
+        List<Category> categories = categoryService.list();
 
-        int total = categoryService.total();
+//        int total = categoryService.total();
+        int total = (int) new PageInfo<>(categories).getTotal();
         page.caculateLast(total);
         //放入转发参数
         mv.addObject("categories",categories);

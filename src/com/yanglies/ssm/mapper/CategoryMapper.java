@@ -26,8 +26,8 @@ public interface CategoryMapper {
     public int count();
 
     //获取记录总数
-    public int total();
+//    public int total();
 
     //根据Page来进行分页查询
-    public List<Category> list(Page page);
+//    public List<Category> list(Page page);
 }

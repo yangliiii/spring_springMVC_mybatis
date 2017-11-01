@@ -38,7 +38,8 @@ public class TestSSM {
 
     @Test
     public void total(){
-        System.out.println(categoryMapper.total());
+
+//        System.out.println(categoryMapper.total());
     }
 
     @Test
@@ -47,7 +48,7 @@ public class TestSSM {
         page.setCount(5);
         page.setStart(0);
 
-        List<Category> categoryList = categoryMapper.list(page);
+        List<Category> categoryList = categoryMapper.list();
         for (Category c :
                 categoryList) {
             System.out.println(c);

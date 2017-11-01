@@ -1,0 +1,20 @@
+PageHelper 分页：
+1、导入jar包    jsqlparser-1.0.jar、pagehelper-5.1.0-beta2.jar
+2、在applicationContext.xml配置文件中，配置对应的插件信息
+    <property name="plugins">
+        <array>
+            <bean class="com.github.pagehelper.PageInterceptor">
+                <property name="properties">
+                    <value>
+
+                    </value>
+                </property>
+            </bean>
+        </array>
+    </property>
+3、service、serviceImpl、controller中均以正常list进行编写，不用进行分页实际实现。
+4、在Controller调用list()之前，编写如下语句：
+    PageHelper.offsetPage(page.getStart(),5);
+5、通过如下语句，实现获取数据表中的记录数：
+    int total = (int) new PageInfo<>(cs).getTotal();
+6、由此，完成PageHelper实现分页。

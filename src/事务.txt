@@ -1,0 +1,33 @@
+SSM事务：
+1、导入需要的jar包 aspectjweaver.jar
+2、Mysql中数据表的ENGINE需为innodb才能支持事务。
+    查看数据表ENGINE:show table status from xxxxxx;
+    修改数据表ENGINE:alter table category_ ENGINE  = innodb;
+3、配置spring配置文件：applicationContext.xml
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+4、在指定方法上添加注解：
+    @Transactional(propagation=Propagation.REQUIRED,rollbackForClassName="Exception")
+
+5、AOP的方式实现事务
+    spring配置文件中配置：appicationContext.xml
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <property name="dataSource" ref="dataSource" />
+        </bean>
+
+        <tx:advice id="txadvice" transaction-manager="transactionManager">
+            <tx:attributes>
+                <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+                <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+                <tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />
+                <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+                <tx:method name="list*" propagation="REQUIRED" rollback-for="Exception"/>
+            </tx:attributes>
+        </tx:advice>
+
+        <aop:config>
+            <aop:pointcut id="serviceMethod" expression="execution(* com.yanglies.ssm.service.*.*(..))"/>
+            <aop:advisor pointcut-ref="serviceMethod" advice-ref="txadvice"/>
+        </aop:config>
