@@ -2,6 +2,7 @@ package com.yanglies.ssm.controller;
 
 import com.yanglies.ssm.pojo.Category;
 import com.yanglies.ssm.service.CategoryService;
+import com.yanglies.ssm.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,12 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping("listCategory")
-    public ModelAndView listCategory(){
+    public ModelAndView listCategory(Page page){
         ModelAndView mv = new ModelAndView();
-        List<Category> categories = categoryService.list();
+        List<Category> categories = categoryService.list(page);
 
+        int total = categoryService.total();
+        page.caculateLast(total);
         //放入转发参数
         mv.addObject("categories",categories);
         //放入jsp路径

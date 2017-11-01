@@ -1,6 +1,7 @@
 package com.yanglies.ssm.service;
 
 import com.yanglies.ssm.pojo.Category;
+import com.yanglies.ssm.util.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,4 +17,6 @@ import java.util.List;
 public interface CategoryService {
 
     List<Category> list();
+    int total();
+    List<Category> list(Page page);
 }

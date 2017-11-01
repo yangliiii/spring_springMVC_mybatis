@@ -1,6 +1,7 @@
 package com.yanglies.ssm.mapper;
 
 import com.yanglies.ssm.pojo.Category;
+import com.yanglies.ssm.util.Page;
 
 import java.util.List;
 
@@ -23,4 +24,10 @@ public interface CategoryMapper {
     public List<Category> list();
 
     public int count();
+
+    //获取记录总数
+    public int total();
+
+    //根据Page来进行分页查询
+    public List<Category> list(Page page);
 }
